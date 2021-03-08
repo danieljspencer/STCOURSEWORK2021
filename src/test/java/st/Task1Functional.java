@@ -14,20 +14,75 @@ public class Task1Functional {
 		parser = new Parser();
 	}
 
-//1.2	
+//	###### SECTION : 0 Basic functionality checking #######
+		
+	@Test
+	public void nameAndShorcut() {
+		parser.add("number", "n", Parser.INTEGER);
+		parser.parse("--number=1");
+		assertEquals(parser.getInteger("number"), parser.getInteger("n"));
+	}
+	
+	@Test
+	public void nameTesting() {
+		parser.add("number", "n", Parser.INTEGER);
+		parser.parse("--number=1");
+		assertEquals(parser.getInteger("number"), 1);
+	}
+
+		// finds bug 7
+		public void parserAddIntSingleTest() {
+			parser.add("number", Parser.INTEGER);
+			parser.parse("--number 1");
+			assertEquals(parser.getInteger("number"), 1);
+		}
+
+		@Test
+		public void parserAddIntOptTest() {
+			parser.add("number", "n", Parser.INTEGER);
+			parser.parse("-n=2");
+			assertEquals(parser.getInteger("n"), 2);
+		}
+
+		// @Test repeat of 7
+		public void parserAddIntBothTest() {
+			parser.add("number", "n", Parser.INTEGER);
+			parser.parse("--number=-1");
+			assertEquals(parser.getInteger("number"), "-1");
+		}
+
+		// add Boolean
+		@Test
+		public void parserAddBoolSingleTest() {
+			parser.add("condition", Parser.BOOLEAN);
+			parser.parse("--condition=true");
+			assertEquals(parser.getString("condition"), "true");
+		}
+
+		@Test
+		public void parserAddBoolOptTest() {
+			parser.add("condition", Parser.BOOLEAN);
+			parser.parse("--condition=true");
+			assertEquals(parser.getString("condition"), "true");
+		}
+
+		@Test
+		public void parserAddBoolBothTest() {
+			parser.add("condition", Parser.BOOLEAN);
+			parser.parse("--condition=true");
+			assertEquals(parser.getString("condition"), "true");
+		}
 
 //	###### SECTION : 1.3  Add options with a shortcut #######
 //1
-	
+
 	@Test
 	public void sameName() {
 		parser.add("number", "n", Parser.INTEGER);
-		parser.parse("-n=1");
-		parser.add("number2", "n", Parser.INTEGER);
-		parser.parse("-n=2");
-		assertEquals(parser.getInteger("n"), 2);
+		parser.parse("--number=1");
+		assertEquals(parser.getInteger("number"), 1);
 	}
-	
+
 	@Test
 	public void replaceTest() {
 		parser.add("number", "n", Parser.INTEGER);
@@ -162,16 +217,16 @@ public class Task1Functional {
 		parser.parse("-O=true");
 		assertEquals(parser.getBoolean("O"), true);
 	}
-	
+
 	@Test
 	public void trueTest3() {
 		parser.add("number2", "n", Parser.BOOLEAN);
 		parser.parse("-n=-1");
 		assertEquals(parser.getBoolean("n"), true);
 	}
-	
+
 //	###### SECTION : 1.4  Add options without a shortcut #######
-	
+
 //1
 	@Test
 	public void overideTest() {
@@ -181,13 +236,13 @@ public class Task1Functional {
 		parser.parse("--number=2");
 		assertEquals(parser.getInteger("number"), 2);
 	}
-	
+
 	@Test
 	public void overideTest2() {
-			parser.add("number", "n", Parser.INTEGER);
-			parser.add("number", "n", Parser.BOOLEAN);
-			parser.parse("--number=1");
-			assertEquals(parser.getBoolean("n"), true);
+		parser.add("number", "n", Parser.INTEGER);
+		parser.add("number", "n", Parser.BOOLEAN);
+		parser.parse("--number=1");
+		assertEquals(parser.getBoolean("n"), true);
 	}
 
 	@Test
@@ -199,7 +254,7 @@ public class Task1Functional {
 		assertEquals(parser.getString("number"), "yes");
 	}
 
-	//2
+	// 2
 	@Test
 	public void badName() {
 		try {
@@ -211,13 +266,13 @@ public class Task1Functional {
 
 	}
 
-	//3
+	// 3
 
-	//4
+	// 4
 
-	//5 
+	// 5
 
-		// finds bug 4
+	// finds bug 4
 	public void falseTestv2() {
 		parser.add("number2", Parser.BOOLEAN);
 		parser.parse("--number2=0");
@@ -238,83 +293,78 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("optimise"), true);
 	}
 
-	
 //	###### SECTION : 1.5  Parse command line options #######
-	
+
 //1
 	@Test
 	public void parserUseName() {
 		parser.add("number", Parser.INTEGER);
 		assertEquals(parser.parse("--number=1"), 0);
 	}
-	
 
 //2
 	@Test
 	public void parserUseShortcut() {
-		parser.add("number","n", Parser.INTEGER);
+		parser.add("number", "n", Parser.INTEGER);
 		assertEquals(parser.parse("-n=-3"), 0);
 	}
-	
+
 //3
 	// Repeat of bug 7
 	public void parserSpace() {
-		parser.add("number","n", Parser.INTEGER);
+		parser.add("number", "n", Parser.INTEGER);
 		assertEquals(parser.parse("-n = 0"), 0);
 	}
-	
+
 	@Test
 	public void parserSpaceTest() {
-		parser.add("number","n", Parser.INTEGER);
+		parser.add("number", "n", Parser.INTEGER);
 		parser.parse("n = 0");
 		assertEquals(parser.parse("-n=-3"), 0);
 		assertEquals(parser.getInteger("-n"), 0);
 	}
-	
+
 //4
-	//@Test
+	// @Test
 	public void Quotes1() {
-		parser.add("option","o", Parser.INTEGER);
+		parser.add("option", "o", Parser.INTEGER);
 		parser.parse("option='value'");
 		assertEquals(parser.parse("option='--value'"), 0);
 		assertEquals(parser.getString("--option"), "'--value'");
 	}
-	
-	//@Test
+
+	// @Test
 	public void Quotes3() {
-		parser.add("number","n", Parser.INTEGER);
+		parser.add("number", "n", Parser.INTEGER);
 		assertEquals(parser.parse("-n = 0"), 0);
 	}
-	
+
 //5
 	@Test
 	public void QuotesDecor() {
-		parser.add("number","n", Parser.INTEGER);
-		//assertEquals(parser.parse("option=’value=\"abc\"’"), 0);
+		parser.add("number", "n", Parser.INTEGER);
+		// assertEquals(parser.parse("option=’value=\"abc\"’"), 0);
 		parser.parse("-n='value=\"abc\"'");
 		assertEquals(parser.getString("n"), "value=\"abc\"");
 	}
-	
-	
+
 //6
 	@Test
 	public void loopAssignTest() {
-		parser.add("number","n", Parser.INTEGER);
-		for (int i = 0; i < 100; i ++) {
+		parser.add("number", "n", Parser.INTEGER);
+		for (int i = 0; i < 100; i++) {
 			parser.parse("--number=1");
 		}
 		parser.parse("--number=0");
 		assertEquals(parser.getInteger("--number"), 0);
 	}
-	
-	
+
 //7
-	
+
 //8
-	
-	
+
 //	###### SECTION : 1.6  Retrieve info #######
-	
+
 //1
 	@Test
 	public void shortCutPrecedence() {
@@ -324,8 +374,7 @@ public class Task1Functional {
 		parser.parse("-no=2");
 		assertEquals(parser.getInteger("n"), 2);
 	}
-	
-	
+
 //2
 
 	@Test
@@ -333,45 +382,45 @@ public class Task1Functional {
 		parser.add("number", Parser.INTEGER);
 		assertEquals(parser.getInteger("0"), 0);
 	}
-	
+
 	@Test
 	public void testEmptyInteger2() {
 		assertEquals(parser.getInteger("test"), 0);
 	}
-	
+
 	@Test
 	public void testEmptyString() {
 		parser.add("string", Parser.STRING);
 		assertEquals(parser.getString("string"), "");
 	}
-	
+
 	@Test
 	public void testEmptyString2() {
 		assertEquals(parser.getString("string"), "");
 	}
-	
+
 	@Test
 	public void testEmptyBool() {
 		parser.add("bool", Parser.BOOLEAN);
 		assertEquals(parser.getBoolean("bool"), false);
 	}
-	
+
 	@Test
 	public void testEmptyBool2() {
 		assertEquals(parser.getBoolean("bool"), false);
 	}
-	
+
 	// @Test finds bug 5
 	public void testEmptyChar() {
 		parser.add("char", Parser.CHAR);
 		assertEquals(parser.getChar("char"), '\0');
 	}
-	
+
 	// @Test repeat of bug 5
 	public void testEmptyChar2() {
 		assertEquals(parser.getChar("char"), '\0');
 	}
-	
+
 //	###### SECTION : FREESTYLE #######
 	@Test
 	public void freestyle1() {
@@ -384,7 +433,7 @@ public class Task1Functional {
 		assertEquals(parser.getInteger("number3"), 3);
 		assertEquals(parser.getInteger("n"), 1);
 	}
-	
+
 	@Test
 	public void freestyle2() {
 		parser.add("str1", "n", Parser.STRING);
@@ -394,50 +443,18 @@ public class Task1Functional {
 		assertEquals(parser.getString("str1"), "-1");
 	}
 	
-//NO organisitation
-	// Add int
+	@Test
+	public void freestyle3() {
+		parser.add("str1", "str1", Parser.STRING);
+		parser.add("str1", "str1", Parser.STRING);
+		parser.parse("--str1='-1' str2 '/n' --str1 1");
+		assertEquals(parser.getString("str1"), "-1");
+	}
 	
-	// finds bug 7
-	public void parserAddIntSingleTest() {
-		parser.add("number", Parser.INTEGER);
-		parser.parse("--number=-1");
-		assertEquals(parser.getInteger("number"), -1);
-	}
-
 	@Test
-	public void parserAddIntOptTest() {
-		parser.add("number", "n", Parser.INTEGER);
-		parser.parse("-n=2");
-		assertEquals(parser.getInteger("n"), 2);
+	public void freestyle4() {
+		parser.add("string", "stringLonger", Parser.STRING);
+		parser.parse("--string=1");
+		assertEquals(parser.getString("-stringLonger"), "1");
 	}
-
-	// @Test repeat of 7
-	public void parserAddIntBothTest() {
-		parser.add("number", "n", Parser.INTEGER);
-		parser.parse("--number=-1");
-		assertEquals(parser.getInteger("number"), "-1");
-	}
-
-	// add Boolean
-	@Test
-	public void parserAddBoolSingleTest() {
-		parser.add("condition", Parser.BOOLEAN);
-		parser.parse("--condition=true");
-		assertEquals(parser.getString("condition"), "true");
-	}
-
-	@Test
-	public void parserAddBoolOptTest() {
-		parser.add("condition", Parser.BOOLEAN);
-		parser.parse("--condition=true");
-		assertEquals(parser.getString("condition"), "true");
-	}
-
-	@Test
-	public void parserAddBoolBothTest() {
-		parser.add("condition", Parser.BOOLEAN);
-		parser.parse("--condition=true");
-		assertEquals(parser.getString("condition"), "true");
-	}
-
 }

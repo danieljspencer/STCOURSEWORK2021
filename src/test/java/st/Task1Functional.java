@@ -52,21 +52,21 @@ public class Task1Functional {
 		}
 
 		// add Boolean
-		@Test
+		//@Test
 		public void parserAddBoolSingleTest() {
 			parser.add("condition", Parser.BOOLEAN);
 			parser.parse("--condition=true");
 			assertEquals(parser.getString("condition"), "true");
 		}
 
-		@Test
+		//@Test
 		public void parserAddBoolOptTest() {
 			parser.add("condition", Parser.BOOLEAN);
 			parser.parse("--condition=true");
 			assertEquals(parser.getString("condition"), "true");
 		}
 
-		@Test
+		//@Test
 		public void parserAddBoolBothTest() {
 			parser.add("condition", Parser.BOOLEAN);
 			parser.parse("--condition=true");
@@ -76,14 +76,14 @@ public class Task1Functional {
 //	###### SECTION : 1.3  Add options with a shortcut #######
 //1
 
-	@Test
+	//@Test
 	public void sameName() {
 		parser.add("number", "n", Parser.INTEGER);
 		parser.parse("--number=1");
 		assertEquals(parser.getInteger("number"), 1);
 	}
 
-	@Test
+	//@Test
 	public void replaceTest() {
 		parser.add("number", "n", Parser.INTEGER);
 		parser.parse("-n=1");
@@ -100,7 +100,7 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("n"), 0);
 	}
 
-	@Test
+	//@Test
 	public void replaceTest2a() {
 		parser.add("number", "n", Parser.INTEGER);
 		parser.add("number2", "n", Parser.BOOLEAN);
@@ -108,7 +108,7 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("n"), true);
 	}
 
-	@Test
+	//@Test
 	public void replaceTest3() {
 		parser.add("number", "n", Parser.INTEGER);
 		parser.add("number2", "n", Parser.BOOLEAN);
@@ -116,7 +116,7 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("n"), true);
 	}
 
-	@Test
+	//@Test
 	public void replaceTest4() {
 		parser.add("number", "n", Parser.INTEGER);
 		parser.add("number2", "n", Parser.STRING);
@@ -125,7 +125,7 @@ public class Task1Functional {
 	}
 
 //2
-	@Test
+	//@Test
 	public void digitFirstTest() {
 		try {
 			parser.add("2number", "n", Parser.INTEGER);
@@ -137,7 +137,7 @@ public class Task1Functional {
 	}
 
 //3
-	@Test
+	//@Test
 	public void shortcutCaseTest() {
 		parser.add("NUMBER", "N", Parser.INTEGER);
 		parser.add("number", "n", Parser.INTEGER);
@@ -146,7 +146,7 @@ public class Task1Functional {
 		assertNotSame(parser.getInteger("N"), parser.getInteger("n"));
 	}
 
-	@Test
+	//@Test
 	public void shortcutCaseTest2() {
 		parser.add("NUMBER", "N", Parser.BOOLEAN);
 		parser.add("number", "n", Parser.INTEGER);
@@ -176,7 +176,7 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("n"), 0);
 	}
 
-	@Test
+	//@Test
 	public void trueTest() {
 		parser.add("number2", "n", Parser.BOOLEAN);
 		parser.parse("-n=100000000000000000000000000000000");
@@ -197,7 +197,7 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("O"), true);
 	}
 
-	@Test
+	//@Test
 	public void trueTest2b() {
 		parser.add("optimise", "O", Parser.BOOLEAN);
 		parser.parse("-O=true");
@@ -211,14 +211,14 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("O"), true);
 	}
 
-	@Test
+	//@Test
 	public void trueTest2d() {
 		parser.add("optimise", "O", Parser.BOOLEAN);
 		parser.parse("-O=true");
 		assertEquals(parser.getBoolean("O"), true);
 	}
 
-	@Test
+	//@Test
 	public void trueTest3() {
 		parser.add("number2", "n", Parser.BOOLEAN);
 		parser.parse("-n=-1");
@@ -228,7 +228,7 @@ public class Task1Functional {
 //	###### SECTION : 1.4  Add options without a shortcut #######
 
 //1
-	@Test
+	//@Test
 	public void overideTest() {
 		parser.add("number", Parser.INTEGER);
 		parser.parse("--number=1");
@@ -237,7 +237,7 @@ public class Task1Functional {
 		assertEquals(parser.getInteger("number"), 2);
 	}
 
-	@Test
+	//@Test
 	public void overideTest2() {
 		parser.add("number", "n", Parser.INTEGER);
 		parser.add("number", "n", Parser.BOOLEAN);
@@ -245,7 +245,7 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("n"), true);
 	}
 
-	@Test
+	//@Test
 	public void overideTest3() {
 		parser.add("number", Parser.INTEGER);
 		parser.parse("--number=1");
@@ -255,7 +255,7 @@ public class Task1Functional {
 	}
 
 	// 2
-	@Test
+	//@Test
 	public void badName() {
 		try {
 			parser.add("2number", Parser.INTEGER);
@@ -279,7 +279,7 @@ public class Task1Functional {
 		assertEquals(parser.getBoolean("number2"), 0);
 	}
 
-	@Test
+	//@Test
 	public void trueTestv2() {
 		parser.add("number", Parser.BOOLEAN);
 		parser.parse("--number=100000000000000000000000000000000");
@@ -296,14 +296,14 @@ public class Task1Functional {
 //	###### SECTION : 1.5  Parse command line options #######
 
 //1
-	@Test
+	//@Test
 	public void parserUseName() {
 		parser.add("number", Parser.INTEGER);
 		assertEquals(parser.parse("--number=1"), 0);
 	}
 
 //2
-	@Test
+	//@Test
 	public void parserUseShortcut() {
 		parser.add("number", "n", Parser.INTEGER);
 		assertEquals(parser.parse("-n=-3"), 0);
@@ -316,7 +316,7 @@ public class Task1Functional {
 		assertEquals(parser.parse("-n = 0"), 0);
 	}
 
-	@Test
+	//@Test
 	public void parserSpaceTest() {
 		parser.add("number", "n", Parser.INTEGER);
 		parser.parse("n = 0");
@@ -333,7 +333,7 @@ public class Task1Functional {
 		assertEquals(parser.getString("--option"), "'--value'");
 	}
 
-	// @Test
+	//@Test
 	public void Quotes3() {
 		parser.add("number", "n", Parser.INTEGER);
 		assertEquals(parser.parse("-n = 0"), 0);

@@ -77,13 +77,7 @@ public class Task1_Functional {
 		assertEquals(parser.getInteger("number"), -1);
 	}
 	
-	/*
-	 * @Test // finds bug 10 ? public void newTestinnit() { parser.add("n",
-	 * Parser.INTEGER); parser.parse("string");
-	 * assertEquals(parser.getInteger("number"), -1); }
-	 */
-	
-	@Test
+	@Test // should finds bug 10
 	public void sameNameTest() {
 		parser.add("number", "o", Parser.INTEGER);
 		parser.add("o", Parser.INTEGER);

@@ -15,10 +15,10 @@ public class Task1_Functional {
 	}
 	
 	@Test // finds bug 1
-	public void freestyle4() {
+	public void shortCutTest() {
 		parser.add("string", "string", Parser.STRING);
 		parser.parse("--string=1");
-		assertEquals(parser.getString("-stringLonger"), "1");
+		assertEquals(parser.getString("-stringLonger"), "");
 	}
 	
 	@Test // finds bug 2
@@ -43,7 +43,7 @@ public class Task1_Functional {
 	}
 	
 	@Test // finds bug 5
-	public void testEmpty() {
+	public void testEmptyChar() {
 		parser.add("char", Parser.CHAR);
 		assertEquals(parser.getChar("char"), '\0');
 	}
@@ -64,14 +64,14 @@ public class Task1_Functional {
 	}
 	
 	@Test // finds bug 8
-	public void newtstsbjha() {
+	public void underScoreTest() {
 		parser.add("number","n", Parser.INTEGER);
 		parser.parse("-n=_");
 		assertEquals(parser.getInteger("number"), "_");
 	}
 	
 	@Test // finds bug 9
-	public void parserLongCheck() {
+	public void parserLongInputCheck() {
 		parser.add("number", Parser.INTEGER);
 		parser.parse("                                                                                                                                                            ");
 		assertEquals(parser.getInteger("number"), -1);
@@ -88,7 +88,7 @@ public class Task1_Functional {
 	}
 	
 	@Test // finds bug 11
-	public void freestyle5() {
+	public void minusTest() {
 		parser.add("s", "string", Parser.STRING);
 		parser.parse("--string=1");
 		assertEquals(parser.getString("-string"), "1");
@@ -103,7 +103,7 @@ public class Task1_Functional {
 	
 
 	@Test // finds bug 13
-	public void freestyle6() {
+	public void sameNameTesting() {
 		parser.add("string", "str", Parser.STRING);
 		parser.add("str", "s", Parser.STRING);
 		parser.parse("--string=s");
